@@ -21,7 +21,6 @@ const creatFormPerson = (n) => {
   //     className: 'field',
   //   });
   const fieldName = creatFieldName('field');
-
   const label = createMyElement('label', {
     className: 'field__label',
     for: `name${n}`,
@@ -64,7 +63,6 @@ const creatFormPerson = (n) => {
 
   fieldName.append(label, input);
   form.append(title, fieldName);
-
   fieldName2.append(label2, input2);
   form.append(fieldName2, button);
 
