@@ -1,8 +1,9 @@
 // *вывод видео
 import { getTriends } from './services.js';
+import renderCard from './renderCard.js';
 
 const filmWeek = document.querySelector('.film-week');
-//первый фильм
+//! первый фильм
 const firstRender = (data) => {
   console.log('data[0]: ', data);
   filmWeek.innerHTML = `
@@ -34,7 +35,16 @@ const firstRender = (data) => {
 // !получаем фильмы
 const renderVideo = async () => {
   const data = await getTriends();
-  firstRender(data.results[0]); //первый фильм
+  //        console.log('data: ', data);
+  // const [firstCard] = data.results;
+  //[firstCard] это первая карточка, то есть firstCard=data.results[0]
+
+  //[firstCard, ...otherCard] - рест оператор, оператор остатка,он все собирает в массив
+  const [firstCard, ...otherCard] = data.results;
+  //firstRender(data.results[0]); //первый фильм
+  firstRender(firstCard); //первый фильм
+  otherCard.length = 12; //12 карточек
+  renderCard(otherCard);
 };
 
 export default renderVideo;
