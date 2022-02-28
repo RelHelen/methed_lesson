@@ -56,3 +56,22 @@ export const getPopular = async (type, page = 1) => {
   const data = await getData(url);
   return data;
 };
+// !получаем ссылку на видео для сериала/фильма для каждой карточки
+// сериалы- https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key=<<api_key>>&language=en-US
+//фильмы - https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=<<api_key>>&language=en-US
+export const getVideo = async (type, id) => {
+  const url = `${BASE_URL}${type}/${id}/videos?api_key=${API_KEY}${LANGUAGE}`;
+  //         console.log('getVideo url : ', url);
+  const data = await getData(url);
+  return data;
+};
+
+//! поиск сериала/фильма
+
+//https://api.themoviedb.org/3/search/multi?api_key=<<api_key>>&language=en-US&query=123&page=1&include_adult=false
+export const search = async (query, page = 1) => {
+  const url = `${BASE_URL}search/multi?api_key=${API_KEY}${LANGUAGE}&query=${query}&page=${page}&include_adult=false`;
+  //console.log('search url : ', url);
+  const data = await getData(url);
+  return data;
+};

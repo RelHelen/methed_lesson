@@ -1,4 +1,4 @@
-import { getTop, getPopular } from './services.js';
+import { getTriends, getTop, getPopular } from './services.js';
 import renderCard from './renderCard.js';
 
 const title = document.querySelector('.other-films__title');
@@ -20,8 +20,15 @@ const menuLink = () => {
         event.preventDefault();
         filmWeek.style.display = 'none';
         title.textContent = target.textContent;
+
+        // В тренде
         if (target.classList.contains('get-nav__link_triends')) {
+          getTriends().then((data) => {
+            // console.log(data);
+            renderCard(data.results);
+          });
         }
+
         //Популярные Фильмы
         if (target.classList.contains('get-nav__link_popular-movies')) {
           getPopular('movie').then((data) => {

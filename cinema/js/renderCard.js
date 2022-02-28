@@ -1,3 +1,4 @@
+import { getVideo } from './services.js';
 //* создание карточек
 const listCard = document.querySelector('.other-films__list');
 {
@@ -18,32 +19,48 @@ const listCard = document.querySelector('.other-films__list');
 //! функция создания карточек
 const renderCard = async (data) => {
   listCard.textContent = '';
-  //map возвращает обратно массив данных из data-массив
-  const cards = data.map((item, index, arr) => {
-    //item это уже  объект
-    //        console.log('cards: ', item);
 
-    const card = document.createElement('li');
-    card.className = 'other-films__item';
+  // ' const cards = data.map((item) => {
+  //   'map возвращает обратно массив данных из data-массив
+  //  'item это уже  объект
+  //        console.log('cards: ', item);
+  Promise.all(
+    data.map(async (item) => {
+      const video = await getVideo(item.media_type, item.id);
+      //       console.log('video item: ', video);
 
-    const link = document.createElement('a');
-    link.className = 'other-films__link';
-    link.dataset.rating = item.vote_average;
+      const key = video.results[0]?.key;
+      //     console.log('video key: ', key);
+      const card = document.createElement('li');
+      card.className = 'other-films__item';
 
-    const img = document.createElement('img');
-    img.className = 'other-films__img';
-    img.alt = `постер: ${item.title || item.name}`;
-    img.src = `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${item.poster_path}`;
+      const link = document.createElement('a');
+      if (key) {
+        link.href = `https://youtu.be/${key}`;
+      }
+      link.className = 'other-films__link';
+      link.dataset.rating = item.vote_average;
 
-    link.append(img);
-    card.append(link);
-    //       console.log('card: ', card);
+      const img = document.createElement('img');
+      img.className = 'other-films__img';
+      img.alt = `постер: ${item.title || item.name}`;
+      img.src = item.poster_path
+        ? `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${item.poster_path}`
+        : `img/no_poster.jpg`;
 
-    return card;
+      link.append(img);
+      card.append(link);
+      console.log('card: ', card);
+      return card;
+    })
+  ).then((cards) => {
+    //console.log('cards: ', cards);
+
+    listCard.append(...cards);
   });
-  //        console.log('cards: ', cards);
-  listCard.append(...cards);
-  //... спред оператор раскладывает на отдельные элементы
+
+  //        'listCard.append(...cards);
+  //        ... спред оператор раскладывает на отдельные элементы
 };
 
 export default renderCard;
