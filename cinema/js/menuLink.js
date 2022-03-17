@@ -24,7 +24,7 @@ const menuLink = () => {
         // В тренде
         if (target.classList.contains('get-nav__link_triends')) {
           getTriends().then((data) => {
-            // console.log(data);
+            //console.log(data);
             renderCard(data.results);
           });
         }
@@ -32,22 +32,22 @@ const menuLink = () => {
         //Популярные Фильмы
         if (target.classList.contains('get-nav__link_popular-movies')) {
           getPopular('movie').then((data) => {
-            // console.log(data);
-            renderCard(data.results);
+            //console.log(data);
+            renderCard(data.results, 'movie');
           });
         }
         //Популярные сериалы
         if (target.classList.contains('get-nav__link_popular-tv')) {
           getPopular('tv').then((data) => {
             // console.log(data);
-            renderCard(data.results);
+            renderCard(data.results, 'tv');
           });
         }
         //Top Сериалы
         if (target.classList.contains('get-nav__link_top-tv')) {
           getTop('tv').then((data) => {
             // console.log(data);
-            renderCard(data.results);
+            renderCard(data.results, 'tv');
           });
         }
 
@@ -55,7 +55,7 @@ const menuLink = () => {
         if (target.classList.contains('get-nav__link_top-movies')) {
           getTop('movie').then((data) => {
             // console.log(data);
-            renderCard(data.results);
+            renderCard(data.results, 'movie');
           });
         }
       }

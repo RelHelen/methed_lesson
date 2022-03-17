@@ -1,7 +1,8 @@
 // *получаем с url фильмы
 const API_KEY = '9bd51e0a45346cc10bb48e427eccb97b';
 const BASE_URL = 'https://api.themoviedb.org/3/';
-const LANGUAGE = '&language=ru-RU';
+//const LANGUAGE = '&language=ru-RU';
+const LANGUAGE = '&language=en-US';
 // trending/all/day?api_key=<<api_key>>
 //функция для запроса с любым сервисом через api
 const getData = (url) => {
@@ -61,8 +62,9 @@ export const getPopular = async (type, page = 1) => {
 //фильмы - https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=<<api_key>>&language=en-US
 export const getVideo = async (type, id) => {
   const url = `${BASE_URL}${type}/${id}/videos?api_key=${API_KEY}${LANGUAGE}`;
-  //         console.log('getVideo url : ', url);
+
   const data = await getData(url);
+  console.log('getVideo url1 : ', url);
   return data;
 };
 

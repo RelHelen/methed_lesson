@@ -17,7 +17,7 @@ const listCard = document.querySelector('.other-films__list');
 </li>; */
 }
 //! функция создания карточек
-const renderCard = async (data) => {
+const renderCard = async (data, type) => {
   listCard.textContent = '';
 
   // ' const cards = data.map((item) => {
@@ -26,11 +26,12 @@ const renderCard = async (data) => {
   //        console.log('cards: ', item);
   Promise.all(
     data.map(async (item) => {
-      const video = await getVideo(item.media_type, item.id);
-      //       console.log('video item: ', video);
+      const mediaType = item.media_type ? item.media_type : type;
+      const video = await getVideo(mediaType, item.id);
+      console.log('video item: ', video);
 
       const key = video.results[0]?.key;
-      //     console.log('video key: ', key);
+      console.log('video key: ', key);
       const card = document.createElement('li');
       card.className = 'other-films__item';
 
@@ -51,6 +52,7 @@ const renderCard = async (data) => {
       link.append(img);
       card.append(link);
       console.log('card: ', card);
+
       return card;
     })
   ).then((cards) => {
